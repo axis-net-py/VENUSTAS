@@ -117,7 +117,7 @@ body.loaded .hero-cta{opacity:1}
 
 /* ============ MARQUEE ============ */
 .marquee{background:var(--ink);color:var(--cream);overflow:hidden;white-space:nowrap;padding:1.1rem 0;transform:rotate(-1.2deg) scale(1.02);margin:2rem 0}
-.marquee__track{display:inline-block;animation:scroll 26s linear infinite}
+.marquee__track{display:inline-block;animation:scroll 60s linear infinite}
 .marquee span{font-family:var(--font-display);font-style:italic;font-size:1.25rem;margin:0 1.6rem}
 .marquee em{font-style:normal;color:var(--gold);font-family:var(--font-body);font-size:.9rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;vertical-align:middle;margin:0 1.6rem}
 @keyframes scroll{to{transform:translateX(-50%)}}
@@ -258,6 +258,31 @@ footer{background:var(--ink);color:var(--cream);padding:6rem 2rem 2.5rem;positio
   .hero{padding-top:6.5rem}
   .hero-float{opacity:.55!important}
   .section-head{padding-top:3.5rem}
+}
+@media(max-width:600px){
+  .header-inner{padding:.9rem 1rem;gap:.7rem}
+  .header-actions{gap:.6rem;flex:1;min-width:0}
+  .search{flex:1;min-width:0}
+  .search input{width:100%;min-width:0;font-size:.85rem}
+  .search input:focus{width:100%}
+  .cart-btn{padding:.62rem 1rem;flex-shrink:0}
+  .hero{padding-left:1.2rem;padding-right:1.2rem;min-height:88svh}
+  .hero-bottom{margin-top:2.4rem}
+  .hero-scroll{display:none}
+  .section-head,.filters,.grid{padding-left:1.2rem;padding-right:1.2rem}
+  .grid{grid-template-columns:1fr 1fr;gap:.9rem}
+  .card-art{height:150px}
+  .card-art .emoji{font-size:3rem}
+  .card-body{padding:.85rem .9rem 1rem}
+  .card-name{font-size:1rem}
+  .card-price strong{font-size:1.1rem}
+  .add-btn{padding:.65rem;font-size:.8rem}
+  .quick-view{display:none}
+  .benefits{padding:3.5rem 1.2rem}
+  .benefits-inner{gap:2.2rem}
+  .quote{padding:4.5rem 1.2rem}
+  .marquee span{font-size:1.05rem;margin:0 1.1rem}
+  footer{padding:4rem 1.2rem 2rem}
 }
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
