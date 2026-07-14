@@ -27,10 +27,16 @@ export default function Store({ products }: { products: Product[] }) {
   const total = Object.entries(cart).reduce((s, [id, q]) => s + byId(id).price * q, 0);
   const count = Object.values(cart).reduce((s, q) => s + q, 0);
 
-  /* localStorage */
+  /* localStorage — descarta itens que saíram do catálogo */
   useEffect(() => {
-    try { setCart(JSON.parse(localStorage.getItem("aline-cart") || "{}")); } catch {}
-  }, []);
+    try {
+      const saved: Cart = JSON.parse(localStorage.getItem("aline-cart") || "{}");
+      const valid = Object.fromEntries(
+        Object.entries(saved).filter(([id]) => products.some((p) => p.id === id))
+      );
+      setCart(valid);
+    } catch {}
+  }, [products]);
   const persist = (updater: (prev: Cart) => Cart) =>
     setCart((prev) => {
       const c = updater(prev);

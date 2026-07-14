@@ -24,15 +24,6 @@ export const FALLBACK_PRODUCTS: Product[] = [
     desc: "Trio de sabonetes com extrato de algodão que limpa sem ressecar. Espuma cremosa, perfume suave de roupa limpa — mãos e corpo macios o dia todo.",
   },
   {
-    id: "2",
-    name: "Pó Compacto Matte Vegano · Max Love",
-    cat: "Rosto", price: 5.99, old: null, // custo 2,99
-    emoji: "🪞", art: "linear-gradient(135deg,#FFE8D9,#EFA98C)",
-    image: "https://ecoms1-nyc3.nyc3.cdn.digitaloceanspaces.com/1225/@v3/1668182496557-1.png",
-    badge: "Vegano",
-    desc: "Acabamento matte sequinho que segura o brilho por horas. Fórmula vegana, textura fininha que não marca linhas — o queridinho do retoque rápido.",
-  },
-  {
     id: "3",
     name: "Esfoliante Corporal Morango 200ml",
     cat: "Corpo", price: 14.9, old: null, // custo 7,20
