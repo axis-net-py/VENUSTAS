@@ -48,28 +48,28 @@ rastreio → cliente acompanha em `/pedido/{token}` (link mostrado no
 - **Painel admin**: `/admin` (senha do env; cookie válido por 7 dias)
 - **Cliente**: `/pedido/{token}` — timeline, itens, rastreio com link Correios
 
-## Frete (Melhor Envio)
+## Frete (tabela fixa por região)
 
-1. Crie conta em https://melhorenvio.com.br — use o ambiente **Sandbox**
-   (sandbox.melhorenvio.com.br) para testar sem custo
-2. Configurações → Tokens → gerar token → copie para `MELHOR_ENVIO_TOKEN`
-3. Preencha `STORE_ORIGIN_CEP` com o CEP de onde os pacotes saem (Belém)
-4. Mantenha `MELHOR_ENVIO_SANDBOX=true` até trocar para produção
+Sem API paga nem cadastro externo. `lib/shipping.ts` resolve o estado do
+CEP digitado via [BrasilAPI](https://brasilapi.com.br) (pública, sem
+token — hospedada na Vercel) e aplica um preço fixo por região a partir
+de Belém-PA (constantes `REGIONS`/`STATE_REGION`). Ajustar os valores
+em `lib/shipping.ts` conforme o custo real de postagem for conhecido.
 
-Sem essas três variáveis, o carrinho volta ao modo antigo (frete grátis
-acima de R$199, sem calculadora de CEP) — nada quebra.
+> Foi cogitado usar o Melhor Envio para cotação em tempo real, mas o
+> WAF deles bloqueia acesso de fora do Brasil (loja operada do
+> Paraguai) — mesmo com VPN. Tabela fixa resolve sem essa dependência;
+> pode ser revisitado se alguém no Brasil gerar o token de acesso.
 
-Fluxo: cliente digita CEP no carrinho → `POST /api/shipping` cota em tempo
-real (peso/dimensão padrão em `lib/products.ts DEFAULT_PACKAGE`, ajustar
-por produto quando o catálogo tiver itens fora desse porte) → escolhe a
-transportadora → `POST /api/checkout` **recalcula a cotação no servidor**
-(nunca confia no preço vindo do cliente) e adiciona como item "Frete" na
-preference do Mercado Pago. Frete grátis acima de R$199 continua valendo
-— quando aplicável, o valor cotado é zerado automaticamente.
+Fluxo: cliente digita CEP no carrinho → `POST /api/shipping` devolve o
+preço da região → `POST /api/checkout` **recalcula no servidor** a
+partir do CEP (nunca confia no preço vindo do cliente) e adiciona como
+item "Frete" na preference do Mercado Pago. Frete grátis acima de R$199
+continua valendo — quando aplicável, o valor é zerado automaticamente.
 
 ## Roadmap
 
 - [x] Fase 1 — loja + checkout Mercado Pago sandbox
 - [x] Fase 2 — pedidos no Neon Postgres, painel admin (status + código de rastreio), página de acompanhamento do cliente via link com token
-- [x] Fase 3a — cotação de frete em tempo real (Melhor Envio) no checkout
-- [ ] Fase 3b — emissão de etiqueta e rastreio automático via Melhor Envio + e-mail transacional
+- [x] Fase 3a — cálculo de frete por região (tabela fixa via BrasilAPI)
+- [ ] Fase 3b — cotação/etiqueta automática (Melhor Envio ou similar, se o acesso for viabilizado) + e-mail transacional

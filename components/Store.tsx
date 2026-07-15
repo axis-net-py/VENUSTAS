@@ -8,7 +8,7 @@ const brl = (v: number) => v.toLocaleString("pt-BR", { style: "currency", curren
 
 type Cart = Record<string, number>;
 
-export default function Store({ products, shippingEnabled }: { products: Product[]; shippingEnabled: boolean }) {
+export default function Store({ products }: { products: Product[] }) {
   const cats = useMemo(() => ["Todos", ...new Set(products.map((p) => p.cat))], [products]);
   const [cart, setCart] = useState<Cart>({});
   const [activeCat, setActiveCat] = useState("Todos");
@@ -51,6 +51,8 @@ export default function Store({ products, shippingEnabled }: { products: Product
     if (digits.length !== 8) { setShippingError("CEP inválido"); return; }
     setShippingLoading(true);
     setShippingError("");
+    setShippingOptions(null);
+    setSelectedShippingId(null);
     try {
       const res = await fetch("/api/shipping", {
         method: "POST",
@@ -58,14 +60,13 @@ export default function Store({ products, shippingEnabled }: { products: Product
         body: JSON.stringify({ cep: digits, items: Object.entries(cart).map(([id, qty]) => ({ id, qty })) }),
       });
       const data = await res.json();
-      if (res.status === 503 && data.error === "not_configured") {
-        setShippingOptions(null); // recurso ainda não ativo: some silenciosamente
+      if (!res.ok) {
+        setShippingError(data.error === "invalid_cep" ? "CEP não encontrado" : "Não consegui calcular o frete agora. Tente de novo.");
         return;
       }
-      if (!res.ok) { setShippingError("Não consegui calcular o frete agora. Tente de novo."); return; }
       const options: ShippingOption[] = data.options ?? [];
       setShippingOptions(options);
-      if (options.length === 0) setShippingError("Nenhuma transportadora atende esse CEP.");
+      if (options.length === 0) setShippingError("Nenhuma opção de entrega para esse CEP.");
       else setSelectedShippingId(options[0].id);
     } catch {
       setShippingError("Não consegui calcular o frete agora. Tente de novo.");
@@ -394,7 +395,7 @@ export default function Store({ products, shippingEnabled }: { products: Product
             );
           })}
         </div>
-        {count > 0 && shippingEnabled && (
+        {count > 0 && (
           <div className="shipping-box">
             <label htmlFor="cepInput">Calcular frete</label>
             <div className="shipping-row">
