@@ -11,6 +11,12 @@ export type Product = {
   desc: string;
 };
 
+// ponytail: um único pacote-padrão (caixa pequena de cosmético) para
+// todo o catálogo — suficiente para cotar frete sem cadastrar peso e
+// dimensão produto a produto. Trocar por campos por produto quando o
+// mix incluir algo fora desse porte (perfume grande, kit volumoso).
+export const DEFAULT_PACKAGE = { weight_kg: 0.3, length_cm: 16, width_cm: 11, height_cm: 4 };
+
 // Catálogo Jessi Make (fornecedor) — preço de venda = custo × 2 arredondado.
 // Custo em comentário para referência de margem.
 export const FALLBACK_PRODUCTS: Product[] = [

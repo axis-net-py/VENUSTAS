@@ -12,6 +12,9 @@ export type Order = {
   customer_email: string | null;
   mp_payment_id: string | null;
   tracking_code: string | null;
+  shipping_price: number;
+  shipping_service: string | null;
+  shipping_cep: string | null;
   created_at: string;
   updated_at: string;
   order_items: OrderItem[];
@@ -31,15 +34,22 @@ const ITEMS_JSON = `coalesce((
   from order_items i where i.order_id = orders.id
 ), '[]')`;
 
+export type ShippingChoice = { price: number; service: string; cep: string } | null;
+
 export async function createOrder(
   items: OrderItem[],
-  total: number
+  total: number,
+  shipping: ShippingChoice = null
 ): Promise<{ id: string; token: string } | null> {
   const sql = db();
   if (!sql) return null;
   try {
     const rows = (await sql`
-      with o as (insert into orders (total) values (${total}) returning id, token)
+      with o as (
+        insert into orders (total, shipping_price, shipping_service, shipping_cep)
+        values (${total}, ${shipping?.price ?? 0}, ${shipping?.service ?? null}, ${shipping?.cep ?? null})
+        returning id, token
+      )
       , _ as (
         insert into order_items (order_id, product_id, name, qty, unit_price)
         select o.id, x.product_id, x.name, x.qty, x.unit_price
@@ -56,7 +66,7 @@ export async function createOrder(
 }
 
 function normalize(row: Record<string, unknown>): Order {
-  return { ...row, total: Number(row.total) } as Order;
+  return { ...row, total: Number(row.total), shipping_price: Number(row.shipping_price ?? 0) } as Order;
 }
 
 export async function getOrderByToken(token: string): Promise<Order | null> {

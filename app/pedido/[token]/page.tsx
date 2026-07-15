@@ -70,6 +70,12 @@ export default async function Pedido({ params }: { params: Promise<{ token: stri
               <span>{brl(i.unit_price * i.qty)}</span>
             </div>
           ))}
+          {order.shipping_service && (
+            <div className="order-item">
+              <span>Frete — {order.shipping_service}</span>
+              <span>{order.shipping_price > 0 ? brl(order.shipping_price) : "Grátis"}</span>
+            </div>
+          )}
           <div className="order-item total">
             <span>Total</span>
             <span>{brl(order.total)}</span>

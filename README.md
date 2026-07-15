@@ -48,8 +48,28 @@ rastreio → cliente acompanha em `/pedido/{token}` (link mostrado no
 - **Painel admin**: `/admin` (senha do env; cookie válido por 7 dias)
 - **Cliente**: `/pedido/{token}` — timeline, itens, rastreio com link Correios
 
+## Frete (Melhor Envio)
+
+1. Crie conta em https://melhorenvio.com.br — use o ambiente **Sandbox**
+   (sandbox.melhorenvio.com.br) para testar sem custo
+2. Configurações → Tokens → gerar token → copie para `MELHOR_ENVIO_TOKEN`
+3. Preencha `STORE_ORIGIN_CEP` com o CEP de onde os pacotes saem (Belém)
+4. Mantenha `MELHOR_ENVIO_SANDBOX=true` até trocar para produção
+
+Sem essas três variáveis, o carrinho volta ao modo antigo (frete grátis
+acima de R$199, sem calculadora de CEP) — nada quebra.
+
+Fluxo: cliente digita CEP no carrinho → `POST /api/shipping` cota em tempo
+real (peso/dimensão padrão em `lib/products.ts DEFAULT_PACKAGE`, ajustar
+por produto quando o catálogo tiver itens fora desse porte) → escolhe a
+transportadora → `POST /api/checkout` **recalcula a cotação no servidor**
+(nunca confia no preço vindo do cliente) e adiciona como item "Frete" na
+preference do Mercado Pago. Frete grátis acima de R$199 continua valendo
+— quando aplicável, o valor cotado é zerado automaticamente.
+
 ## Roadmap
 
 - [x] Fase 1 — loja + checkout Mercado Pago sandbox
 - [x] Fase 2 — pedidos no Neon Postgres, painel admin (status + código de rastreio), página de acompanhamento do cliente via link com token
-- [ ] Fase 3 — Melhor Envio (cotação de frete, etiqueta, rastreio automático) + e-mail transacional
+- [x] Fase 3a — cotação de frete em tempo real (Melhor Envio) no checkout
+- [ ] Fase 3b — emissão de etiqueta e rastreio automático via Melhor Envio + e-mail transacional

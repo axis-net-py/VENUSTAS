@@ -223,8 +223,29 @@ body.loaded .hero-cta{opacity:1}
 .remove{margin-left:auto;background:none;border:none;color:rgba(30,14,22,.4);font-size:.76rem;text-decoration:underline;transition:color .2s}
 .remove:hover{color:var(--rose)}
 .cart-empty{text-align:center;padding:3.5rem 1rem;color:rgba(30,14,22,.5);font-family:var(--font-display);font-style:italic;font-size:1.2rem;line-height:1.6}
+
+.shipping-box{padding:1.1rem 1.7rem;border-top:1px solid rgba(30,14,22,.08)}
+.shipping-box label{font-size:.78rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:rgba(30,14,22,.55)}
+.shipping-row{display:flex;gap:.6rem;margin-top:.5rem}
+.shipping-row input{flex:1;border:1.5px solid rgba(30,14,22,.2);border-radius:10px;padding:.6rem .8rem;font:inherit;font-size:.92rem;background:var(--white)}
+.shipping-row input:focus{border-color:var(--rose);outline:none}
+.shipping-row button{background:var(--ink);color:var(--cream);border:none;border-radius:10px;padding:.6rem 1.2rem;font-weight:800;font-size:.85rem;transition:background .2s}
+.shipping-row button:hover:not(:disabled){background:var(--rose)}
+.shipping-row button:disabled{opacity:.5}
+.shipping-error{margin-top:.55rem;font-size:.82rem;color:var(--rose-deep)}
+.shipping-options{margin-top:.8rem;display:flex;flex-direction:column;gap:.5rem}
+.shipping-option{display:flex;align-items:center;gap:.7rem;border:1.5px solid rgba(30,14,22,.15);border-radius:12px;padding:.65rem .8rem;cursor:pointer;transition:border-color .2s,background .2s}
+.shipping-option:hover{border-color:rgba(226,59,109,.5)}
+.shipping-option.active{border-color:var(--rose);background:var(--rose-soft)}
+.shipping-option input{accent-color:var(--rose)}
+.shipping-option-name{flex:1;font-size:.86rem;line-height:1.4}
+.shipping-option-name small{color:rgba(30,14,22,.5);font-weight:400}
+.shipping-option strong{font-size:.9rem}
+
 .drawer-foot{padding:1.4rem 1.7rem;border-top:1px solid rgba(30,14,22,.1)}
 .subtotal{display:flex;justify-content:space-between;font-weight:800;font-size:1.2rem;margin-bottom:1.1rem}
+.subtotal.shipping-line,.subtotal.total-line{font-size:.92rem;font-weight:600;color:rgba(30,14,22,.7)}
+.subtotal.total-line{font-size:1.2rem;font-weight:800;color:var(--ink);padding-top:.5rem;border-top:1px dashed rgba(30,14,22,.15)}
 .checkout{width:100%;background:var(--ink);color:var(--cream);border:none;border-radius:16px;padding:1.05rem;font-weight:800;font-size:1rem;position:relative;overflow:hidden;transition:color .3s}
 .checkout::before{content:"";position:absolute;inset:0;background:var(--rose);transform:translateY(101%);transition:transform .32s var(--ease)}
 .checkout:hover:not(:disabled)::before{transform:translateY(0)}

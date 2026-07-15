@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import { getProducts } from "@/lib/products";
 import { createOrder } from "@/lib/orders";
+import { calculateShipping } from "@/lib/shipping";
+
+const FREE_SHIP = 199;
 
 // Cria uma preference no Mercado Pago (Checkout Pro) e devolve a URL
 // de pagamento. Preços SEMPRE do catálogo do servidor — nunca do cliente.
@@ -10,7 +13,10 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "mp_not_configured" }, { status: 503 });
   }
 
-  let body: { items?: { id: string; qty: number }[] };
+  let body: {
+    items?: { id: string; qty: number }[];
+    shipping?: { serviceId: string; cep: string } | null;
+  };
   try {
     body = await req.json();
   } catch {
@@ -38,11 +44,45 @@ export async function POST(req: Request) {
     });
   }
 
-  // pedido criado antes do pagamento; webhook promove pendente → pago
+  const subtotal = mpItems.reduce((s, i) => s + i.unit_price * i.quantity, 0);
+
+  // frete recalculado no servidor a partir da cotação real — nunca
+  // confiar no preço que o cliente mandou de volta
+  let shippingPrice = 0;
+  let shippingLabel: string | null = null;
+  let shippingCep: string | null = null;
+  if (body.shipping?.serviceId && body.shipping?.cep) {
+    const quote = await calculateShipping(body.shipping.cep, items);
+    if (!quote.ok) {
+      return NextResponse.json({ error: "invalid_shipping" }, { status: 400 });
+    }
+    const option = quote.options.find((o) => o.id === body.shipping!.serviceId);
+    if (!option) {
+      return NextResponse.json({ error: "invalid_shipping" }, { status: 400 });
+    }
+    shippingPrice = subtotal >= FREE_SHIP ? 0 : option.price;
+    shippingLabel = `${option.company} · ${option.name}`;
+    shippingCep = body.shipping.cep.replace(/\D/g, "");
+    if (shippingPrice > 0) {
+      mpItems.push({
+        id: "frete",
+        title: `Frete — ${shippingLabel}`,
+        quantity: 1,
+        currency_id: "BRL",
+        unit_price: Math.round(shippingPrice * 100) / 100,
+      });
+    }
+  }
+
   const total = mpItems.reduce((s, i) => s + i.unit_price * i.quantity, 0);
+
+  // pedido criado antes do pagamento; webhook promove pendente → pago
   const order = await createOrder(
-    mpItems.map((i) => ({ product_id: i.id, name: i.title, qty: i.quantity, unit_price: i.unit_price })),
-    Math.round(total * 100) / 100
+    mpItems
+      .filter((i) => i.id !== "frete")
+      .map((i) => ({ product_id: i.id, name: i.title, qty: i.quantity, unit_price: i.unit_price })),
+    Math.round(total * 100) / 100,
+    shippingLabel ? { price: shippingPrice, service: shippingLabel, cep: shippingCep! } : null
   );
   const tokenParam = order ? `&pedido=${order.token}` : "";
 

@@ -59,6 +59,12 @@ export default async function Admin({ searchParams }: { searchParams: Promise<{ 
                   <li key={n}>{i.qty}x {i.name} — {brl(i.unit_price * i.qty)}</li>
                 ))}
               </ul>
+              {o.shipping_service && (
+                <p className="muted">
+                  Frete: {o.shipping_service} — {o.shipping_price > 0 ? brl(o.shipping_price) : "grátis"}
+                  {o.shipping_cep && ` · CEP ${o.shipping_cep}`}
+                </p>
+              )}
               {o.customer_email && <p className="muted">Cliente: {o.customer_email}</p>}
               <form action={saveOrder} className="admin-form">
                 <input type="hidden" name="id" value={o.id} />

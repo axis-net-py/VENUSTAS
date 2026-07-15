@@ -1,13 +1,14 @@
 "use client";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { Product } from "@/lib/products";
+import type { ShippingOption } from "@/lib/shipping";
 
 const FREE_SHIP = 199;
 const brl = (v: number) => v.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 
 type Cart = Record<string, number>;
 
-export default function Store({ products }: { products: Product[] }) {
+export default function Store({ products, shippingEnabled }: { products: Product[]; shippingEnabled: boolean }) {
   const cats = useMemo(() => ["Todos", ...new Set(products.map((p) => p.cat))], [products]);
   const [cart, setCart] = useState<Cart>({});
   const [activeCat, setActiveCat] = useState("Todos");
@@ -17,6 +18,11 @@ export default function Store({ products }: { products: Product[] }) {
   const [modalQty, setModalQty] = useState(1);
   const [toast, setToast] = useState("");
   const [checkingOut, setCheckingOut] = useState(false);
+  const [cep, setCep] = useState("");
+  const [shippingOptions, setShippingOptions] = useState<ShippingOption[] | null>(null);
+  const [shippingLoading, setShippingLoading] = useState(false);
+  const [shippingError, setShippingError] = useState("");
+  const [selectedShippingId, setSelectedShippingId] = useState<string | null>(null);
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const gridRef = useRef<HTMLElement>(null);
 
@@ -26,6 +32,47 @@ export default function Store({ products }: { products: Product[] }) {
   const byId = (id: string) => products.find((p) => p.id === id)!;
   const total = Object.entries(cart).reduce((s, [id, q]) => s + byId(id).price * q, 0);
   const count = Object.values(cart).reduce((s, q) => s + q, 0);
+  const freeShipping = total >= FREE_SHIP;
+  const selectedShipping = shippingOptions?.find((o) => o.id === selectedShippingId) ?? null;
+  const shippingCharge = selectedShipping ? (freeShipping ? 0 : selectedShipping.price) : 0;
+  const grandTotal = total + shippingCharge;
+  const cartKey = Object.entries(cart).map(([id, q]) => `${id}:${q}`).join(",");
+
+  /* cotação de frete: recalcula quando o carrinho muda */
+  useEffect(() => {
+    setShippingOptions(null);
+    setSelectedShippingId(null);
+    setShippingError("");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cartKey]);
+
+  const fetchShipping = async () => {
+    const digits = cep.replace(/\D/g, "");
+    if (digits.length !== 8) { setShippingError("CEP inválido"); return; }
+    setShippingLoading(true);
+    setShippingError("");
+    try {
+      const res = await fetch("/api/shipping", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ cep: digits, items: Object.entries(cart).map(([id, qty]) => ({ id, qty })) }),
+      });
+      const data = await res.json();
+      if (res.status === 503 && data.error === "not_configured") {
+        setShippingOptions(null); // recurso ainda não ativo: some silenciosamente
+        return;
+      }
+      if (!res.ok) { setShippingError("Não consegui calcular o frete agora. Tente de novo."); return; }
+      const options: ShippingOption[] = data.options ?? [];
+      setShippingOptions(options);
+      if (options.length === 0) setShippingError("Nenhuma transportadora atende esse CEP.");
+      else setSelectedShippingId(options[0].id);
+    } catch {
+      setShippingError("Não consegui calcular o frete agora. Tente de novo.");
+    } finally {
+      setShippingLoading(false);
+    }
+  };
 
   /* localStorage — descarta itens que saíram do catálogo */
   useEffect(() => {
@@ -125,20 +172,30 @@ export default function Store({ products }: { products: Product[] }) {
     document.body.style.overflow = drawerOpen || modalProduct ? "hidden" : "";
   }, [drawerOpen, modalProduct]);
 
+  // se a cotação trouxe opções, o cliente precisa escolher uma antes de pagar
+  const shippingPending = !!shippingOptions && shippingOptions.length > 0 && !selectedShippingId;
+
   /* checkout: Mercado Pago; fallback WhatsApp se não configurado */
   const checkout = async () => {
     setCheckingOut(true);
     try {
+      const digits = cep.replace(/\D/g, "");
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ items: Object.entries(cart).map(([id, qty]) => ({ id, qty })) }),
+        body: JSON.stringify({
+          items: Object.entries(cart).map(([id, qty]) => ({ id, qty })),
+          shipping: selectedShippingId && digits.length === 8 ? { serviceId: selectedShippingId, cep: digits } : null,
+        }),
       });
       const data = await res.json();
       if (res.ok && data.init_point) { window.location.href = data.init_point; return; }
       /* MP não configurado: WhatsApp */
       const lines = Object.entries(cart).map(([id, q]) => `• ${q}x ${byId(id).name} — ${brl(byId(id).price * q)}`);
-      const msg = encodeURIComponent(`Olá! Quero finalizar meu pedido:\n\n${lines.join("\n")}\n\nTotal: ${brl(total)}`);
+      const shippingLine = selectedShipping
+        ? `\nFrete (${selectedShipping.company} ${selectedShipping.name}): ${freeShipping ? "Grátis" : brl(selectedShipping.price)}`
+        : "";
+      const msg = encodeURIComponent(`Olá! Quero finalizar meu pedido:\n\n${lines.join("\n")}${shippingLine}\n\nTotal: ${brl(grandTotal)}`);
       window.open(`https://wa.me/5500000000000?text=${msg}`, "_blank");
     } finally {
       setCheckingOut(false);
@@ -337,10 +394,40 @@ export default function Store({ products }: { products: Product[] }) {
             );
           })}
         </div>
+        {count > 0 && shippingEnabled && (
+          <div className="shipping-box">
+            <label htmlFor="cepInput">Calcular frete</label>
+            <div className="shipping-row">
+              <input id="cepInput" inputMode="numeric" placeholder="00000-000" maxLength={9}
+                value={cep} onChange={(e) => setCep(e.target.value)}
+                onKeyDown={(e) => { if (e.key === "Enter") fetchShipping(); }} />
+              <button type="button" onClick={fetchShipping} disabled={shippingLoading} data-hover>
+                {shippingLoading ? "…" : "Calcular"}
+              </button>
+            </div>
+            {shippingError && <p className="shipping-error">{shippingError}</p>}
+            {shippingOptions && shippingOptions.length > 0 && (
+              <div className="shipping-options">
+                {shippingOptions.map((o) => (
+                  <label key={o.id} className={`shipping-option${selectedShippingId === o.id ? " active" : ""}`}>
+                    <input type="radio" name="shipping" checked={selectedShippingId === o.id}
+                      onChange={() => setSelectedShippingId(o.id)} />
+                    <span className="shipping-option-name">{o.company} · {o.name}<br /><small>até {o.days} dias úteis</small></span>
+                    <strong>{freeShipping ? "Grátis" : brl(o.price)}</strong>
+                  </label>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
         <div className="drawer-foot">
           <div className="subtotal"><span>Subtotal</span><span>{brl(total)}</span></div>
-          <button className="checkout" disabled={count === 0 || checkingOut} data-hover onClick={checkout}>
-            <span>{checkingOut ? "Preparando pagamento…" : "Finalizar compra"}</span>
+          {selectedShipping && (
+            <div className="subtotal shipping-line"><span>Frete</span><span>{freeShipping ? "Grátis" : brl(shippingCharge)}</span></div>
+          )}
+          {selectedShipping && <div className="subtotal total-line"><span>Total</span><span>{brl(grandTotal)}</span></div>}
+          <button className="checkout" disabled={count === 0 || checkingOut || shippingPending} data-hover onClick={checkout}>
+            <span>{checkingOut ? "Preparando pagamento…" : shippingPending ? "Escolha o frete" : "Finalizar compra"}</span>
           </button>
           <p className="checkout-note">Pix, boleto e cartão em até 6x · pagamento seguro via Mercado Pago</p>
         </div>
