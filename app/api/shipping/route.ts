@@ -19,5 +19,5 @@ export async function POST(req: Request) {
     const status = result.reason === "invalid_cep" ? 400 : 503;
     return NextResponse.json({ error: result.reason }, { status });
   }
-  return NextResponse.json({ options: result.options });
+  return NextResponse.json({ options: result.options, address: result.address });
 }

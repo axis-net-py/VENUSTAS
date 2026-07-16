@@ -42,19 +42,37 @@ const ITEMS_JSON = `coalesce((
 ), '[]')`;
 
 export type ShippingChoice = { price: number; service: string; cep: string } | null;
+export type OrderAddress = {
+  name: string;
+  phone: string;
+  line1: string;
+  line2: string | null;
+  city: string;
+  state: string;
+  postal_code: string;
+} | null;
 
 export async function createOrder(
   items: OrderItem[],
   total: number,
-  shipping: ShippingChoice = null
+  shipping: ShippingChoice = null,
+  address: OrderAddress = null
 ): Promise<{ id: string; token: string } | null> {
   const sql = db();
   if (!sql) return null;
   try {
     const rows = (await sql`
       with o as (
-        insert into orders (total, shipping_price, shipping_service, shipping_cep)
-        values (${total}, ${shipping?.price ?? 0}, ${shipping?.service ?? null}, ${shipping?.cep ?? null})
+        insert into orders (
+          total, shipping_price, shipping_service, shipping_cep,
+          customer_phone, address_name, address_line1, address_line2,
+          address_city, address_state, address_postal_code
+        )
+        values (
+          ${total}, ${shipping?.price ?? 0}, ${shipping?.service ?? null}, ${shipping?.cep ?? null},
+          ${address?.phone ?? null}, ${address?.name ?? null}, ${address?.line1 ?? null}, ${address?.line2 ?? null},
+          ${address?.city ?? null}, ${address?.state ?? null}, ${address?.postal_code ?? null}
+        )
         returning id, token
       )
       , _ as (

@@ -23,6 +23,12 @@ export default function Store({ products }: { products: Product[] }) {
   const [shippingLoading, setShippingLoading] = useState(false);
   const [shippingError, setShippingError] = useState("");
   const [selectedShippingId, setSelectedShippingId] = useState<string | null>(null);
+  const [addrName, setAddrName] = useState("");
+  const [addrPhone, setAddrPhone] = useState("");
+  const [addrLine1, setAddrLine1] = useState("");
+  const [addrLine2, setAddrLine2] = useState("");
+  const [addrCity, setAddrCity] = useState("");
+  const [addrState, setAddrState] = useState("");
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const gridRef = useRef<HTMLElement>(null);
 
@@ -68,6 +74,12 @@ export default function Store({ products }: { products: Product[] }) {
       setShippingOptions(options);
       if (options.length === 0) setShippingError("Nenhuma opção de entrega para esse CEP.");
       else setSelectedShippingId(options[0].id);
+      if (data.address) {
+        setAddrLine1(data.address.street || "");
+        setAddrLine2(data.address.neighborhood || "");
+        setAddrCity(data.address.city || "");
+        setAddrState(data.address.state || "");
+      }
     } catch {
       setShippingError("Não consegui calcular o frete agora. Tente de novo.");
     } finally {
@@ -175,8 +187,11 @@ export default function Store({ products }: { products: Product[] }) {
 
   // se a cotação trouxe opções, o cliente precisa escolher uma antes de pagar
   const shippingPending = !!shippingOptions && shippingOptions.length > 0 && !selectedShippingId;
+  const addressPending =
+    cep.replace(/\D/g, "").length !== 8 ||
+    !addrName.trim() || !addrPhone.trim() || !addrLine1.trim() || !addrCity.trim() || !addrState.trim();
 
-  /* checkout: Stripe Checkout; fallback WhatsApp se não configurado */
+  /* checkout: cria pedido com endereço; Stripe se configurado, senão WhatsApp (Pix manual) */
   const checkout = async () => {
     setCheckingOut(true);
     try {
@@ -187,17 +202,18 @@ export default function Store({ products }: { products: Product[] }) {
         body: JSON.stringify({
           items: Object.entries(cart).map(([id, qty]) => ({ id, qty })),
           shipping: selectedShippingId && digits.length === 8 ? { serviceId: selectedShippingId, cep: digits } : null,
+          address: {
+            name: addrName, phone: addrPhone, line1: addrLine1, line2: addrLine2 || undefined,
+            city: addrCity, state: addrState, postalCode: digits,
+          },
         }),
       });
       const data = await res.json();
       if (res.ok && data.url) { window.location.href = data.url; return; }
-      /* Stripe não configurado: WhatsApp */
-      const lines = Object.entries(cart).map(([id, q]) => `• ${q}x ${byId(id).name} — ${brl(byId(id).price * q)}`);
-      const shippingLine = selectedShipping
-        ? `\nFrete (${selectedShipping.company} ${selectedShipping.name}): ${freeShipping ? "Grátis" : brl(selectedShipping.price)}`
-        : "";
-      const msg = encodeURIComponent(`Olá! Quero finalizar meu pedido:\n\n${lines.join("\n")}${shippingLine}\n\nTotal: ${brl(grandTotal)}`);
-      window.open(`https://wa.me/5569992402952?text=${msg}`, "_blank");
+      if (res.ok && data.whatsapp_url) { window.location.href = data.whatsapp_url; return; }
+      showToast("Não consegui finalizar. Confira os dados e tente de novo.");
+    } catch {
+      showToast("Não consegui finalizar. Confira os dados e tente de novo.");
     } finally {
       setCheckingOut(false);
     }
@@ -255,7 +271,7 @@ export default function Store({ products }: { products: Product[] }) {
           {[0, 1].map((i) => (
             <span key={i}>
               <span>Frete grátis acima de R$199</span><em>✦</em>
-              <span>Pagamento seguro com cartão</span><em>✦</em>
+              <span>Pagamento por Pix</span><em>✦</em>
               <span>Novidades toda semana</span><em>✦</em>
               <span>Curadoria de maquiagem e cosméticos</span><em>✦</em>
             </span>
@@ -305,7 +321,7 @@ export default function Store({ products }: { products: Product[] }) {
         <div className="benefits-inner">
           {[
             ["(01)", "Frete grátis", "Acima de R$199 para todo o Brasil. Rastreio em tempo real do pedido até a sua porta."],
-            ["(02)", "Pagamento seguro", "Cartão de crédito processado com a segurança do Stripe em cada compra."],
+            ["(02)", "Pix pelo WhatsApp", "Finalize seu pedido e combine o pagamento por Pix direto com a gente."],
             ["(03)", "Cruelty free", "Só trabalhamos com marcas que não testam em animais. Beleza sem culpa."],
             ["(04)", "Troca fácil", "Não amou? Devolução gratuita em até 30 dias, sem perguntas."],
           ].map(([num, h, p]) => (
@@ -418,16 +434,34 @@ export default function Store({ products }: { products: Product[] }) {
             )}
           </div>
         )}
+        {count > 0 && shippingOptions && shippingOptions.length > 0 && (
+          <div className="address-box">
+            <label>Dados de entrega</label>
+            <input placeholder="Nome completo" value={addrName} onChange={(e) => setAddrName(e.target.value)} />
+            <input placeholder="Telefone (WhatsApp)" value={addrPhone} onChange={(e) => setAddrPhone(e.target.value)} />
+            <input placeholder="Rua e número" value={addrLine1} onChange={(e) => setAddrLine1(e.target.value)} />
+            <input placeholder="Complemento / bairro" value={addrLine2} onChange={(e) => setAddrLine2(e.target.value)} />
+            <div className="address-row">
+              <input placeholder="Cidade" value={addrCity} onChange={(e) => setAddrCity(e.target.value)} />
+              <input placeholder="UF" maxLength={2} value={addrState} onChange={(e) => setAddrState(e.target.value.toUpperCase())} />
+            </div>
+          </div>
+        )}
         <div className="drawer-foot">
           <div className="subtotal"><span>Subtotal</span><span>{brl(total)}</span></div>
           {selectedShipping && (
             <div className="subtotal shipping-line"><span>Frete</span><span>{freeShipping ? "Grátis" : brl(shippingCharge)}</span></div>
           )}
           {selectedShipping && <div className="subtotal total-line"><span>Total</span><span>{brl(grandTotal)}</span></div>}
-          <button className="checkout" disabled={count === 0 || checkingOut || shippingPending} data-hover onClick={checkout}>
-            <span>{checkingOut ? "Preparando pagamento…" : shippingPending ? "Escolha o frete" : "Finalizar compra"}</span>
+          <button className="checkout" disabled={count === 0 || checkingOut || shippingPending || addressPending} data-hover onClick={checkout}>
+            <span>
+              {checkingOut ? "Enviando pedido…"
+                : shippingPending ? "Escolha o frete"
+                : addressPending ? "Complete seus dados de entrega"
+                : "Finalizar pelo WhatsApp"}
+            </span>
           </button>
-          <p className="checkout-note">Cartão de crédito · pagamento seguro via Stripe</p>
+          <p className="checkout-note">Pagamento por Pix, combinado direto pelo WhatsApp</p>
         </div>
       </aside>
 

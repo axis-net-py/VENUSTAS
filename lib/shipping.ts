@@ -6,8 +6,15 @@ export type ShippingOption = {
   days: number;
 };
 
+export type CepAddress = {
+  street: string | null;
+  neighborhood: string | null;
+  city: string;
+  state: string;
+};
+
 export type ShippingResult =
-  | { ok: true; options: ShippingOption[] }
+  | { ok: true; options: ShippingOption[]; address: CepAddress }
   | { ok: false; reason: "invalid_cep" | "api_error" };
 
 const CEP_RE = /^\d{8}$/;
@@ -40,23 +47,28 @@ export async function calculateShipping(
   const cep = destCep.replace(/\D/g, "");
   if (!CEP_RE.test(cep)) return { ok: false, reason: "invalid_cep" };
 
-  let state: string;
+  let data: { state: string; city: string; street?: string; neighborhood?: string };
   try {
     const res = await fetch(`https://brasilapi.com.br/api/cep/v2/${cep}`);
     if (!res.ok) return { ok: false, reason: "invalid_cep" };
-    const data = await res.json();
-    state = data.state;
+    data = await res.json();
   } catch (e) {
     console.error("[shipping] BrasilAPI falhou:", e);
     return { ok: false, reason: "api_error" };
   }
 
-  const region = STATE_REGION[state];
+  const region = STATE_REGION[data.state];
   if (!region) return { ok: false, reason: "invalid_cep" };
   const { price, days } = REGIONS[region];
 
   return {
     ok: true,
     options: [{ id: "padrao", name: "Entrega padrão", company: "ALINE", price, days }],
+    address: {
+      street: data.street || null,
+      neighborhood: data.neighborhood || null,
+      city: data.city,
+      state: data.state,
+    },
   };
 }

@@ -242,6 +242,13 @@ body.loaded .hero-cta{opacity:1}
 .shipping-option-name small{color:rgba(30,14,22,.5);font-weight:400}
 .shipping-option strong{font-size:.9rem}
 
+.address-box{padding:1.1rem 1.7rem;border-top:1px solid rgba(30,14,22,.08);display:flex;flex-direction:column;gap:.55rem}
+.address-box label{font-size:.78rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:rgba(30,14,22,.55)}
+.address-box input{border:1.5px solid rgba(30,14,22,.2);border-radius:10px;padding:.6rem .8rem;font:inherit;font-size:.92rem;background:var(--white)}
+.address-box input:focus{border-color:var(--rose);outline:none}
+.address-row{display:flex;gap:.55rem}
+.address-row input:last-child{max-width:5rem;text-align:center;text-transform:uppercase}
+
 .drawer-foot{padding:1.4rem 1.7rem;border-top:1px solid rgba(30,14,22,.1)}
 .subtotal{display:flex;justify-content:space-between;font-weight:800;font-size:1.2rem;margin-bottom:1.1rem}
 .subtotal.shipping-line,.subtotal.total-line{font-size:.92rem;font-weight:600;color:rgba(30,14,22,.7)}

@@ -1,22 +1,43 @@
 import { NextResponse } from "next/server";
 import { getProducts } from "@/lib/products";
-import { createOrder } from "@/lib/orders";
+import { createOrder, type OrderAddress } from "@/lib/orders";
 import { calculateShipping } from "@/lib/shipping";
 import { stripe, INTEGRATION_IDENTIFIER } from "@/lib/stripe";
 
 const FREE_SHIP = 199;
 
-// Cria uma Checkout Session no Stripe e devolve a URL de pagamento.
+type AddressInput = {
+  name: string; phone: string; line1: string; line2?: string;
+  city: string; state: string; postalCode: string;
+};
+
+function validateAddress(a: unknown): OrderAddress | null {
+  if (!a || typeof a !== "object") return null;
+  const x = a as Partial<AddressInput>;
+  if (!x.name?.trim() || !x.phone?.trim() || !x.line1?.trim() || !x.city?.trim() || !x.state?.trim() || !x.postalCode?.trim()) {
+    return null;
+  }
+  return {
+    name: x.name.trim(),
+    phone: x.phone.trim(),
+    line1: x.line1.trim(),
+    line2: x.line2?.trim() || null,
+    city: x.city.trim(),
+    state: x.state.trim().toUpperCase(),
+    postal_code: x.postalCode.replace(/\D/g, ""),
+  };
+}
+
+// Cria o pedido (com endereço) no banco. Se o Stripe estiver
+// configurado, também abre uma Checkout Session; senão devolve um
+// link de WhatsApp para o cliente combinar o pagamento (Pix manual)
+// — hoje é o caminho real, a conta Stripe está pendente de verificação.
 // Preços SEMPRE do catálogo do servidor — nunca do cliente.
 export async function POST(req: Request) {
-  const client = stripe();
-  if (!client) {
-    return NextResponse.json({ error: "stripe_not_configured" }, { status: 503 });
-  }
-
   let body: {
     items?: { id: string; qty: number }[];
     shipping?: { serviceId: string; cep: string } | null;
+    address?: unknown;
   };
   try {
     body = await req.json();
@@ -26,6 +47,10 @@ export async function POST(req: Request) {
   const items = body.items ?? [];
   if (!Array.isArray(items) || items.length === 0 || items.length > 50) {
     return NextResponse.json({ error: "invalid_items" }, { status: 400 });
+  }
+  const address = validateAddress(body.address);
+  if (!address) {
+    return NextResponse.json({ error: "invalid_address" }, { status: 400 });
   }
 
   const catalog = await getProducts();
@@ -66,16 +91,39 @@ export async function POST(req: Request) {
 
   const total = lines.reduce((s, i) => s + i.unit_price * i.quantity, 0);
 
-  // pedido criado antes do pagamento; webhook promove pendente → pago
+  // pedido sempre criado com endereço; se Stripe estiver ativo, webhook
+  // promove pendente → pago; senão fica pendente até confirmar o Pix
   const order = await createOrder(
     lines
       .filter((i) => i.id !== "frete")
       .map((i) => ({ product_id: i.id, name: i.title, qty: i.quantity, unit_price: i.unit_price })),
     Math.round(total * 100) / 100,
-    shippingLabel ? { price: shippingPrice, service: shippingLabel, cep: shippingCep! } : null
+    shippingLabel ? { price: shippingPrice, service: shippingLabel, cep: shippingCep! } : null,
+    address
   );
-  const tokenParam = order ? `&pedido=${order.token}` : "";
 
+  const client = stripe();
+  if (!client) {
+    const addrLine = `${address.line1}${address.line2 ? `, ${address.line2}` : ""} — ${address.city}/${address.state}, CEP ${address.postal_code}`;
+    const itemLines = lines.map((i) => `• ${i.quantity}x ${i.title} — R$ ${(i.unit_price * i.quantity).toFixed(2).replace(".", ",")}`);
+    const msg = [
+      `Olá! Quero finalizar meu pedido${order ? ` #${order.token.slice(0, 8).toUpperCase()}` : ""}:`,
+      "",
+      ...itemLines,
+      "",
+      `Total: R$ ${total.toFixed(2).replace(".", ",")}`,
+      "",
+      `Nome: ${address.name}`,
+      `Telefone: ${address.phone}`,
+      `Endereço: ${addrLine}`,
+      "",
+      "Pago por Pix, por favor me envia a chave 🙂",
+    ].join("\n");
+    const whatsapp = `https://wa.me/5569992402952?text=${encodeURIComponent(msg)}`;
+    return NextResponse.json({ whatsapp_url: whatsapp, pedido: order?.token ?? null });
+  }
+
+  const tokenParam = order ? `&pedido=${order.token}` : "";
   const site = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3200";
   try {
     const session = await client.checkout.sessions.create({
