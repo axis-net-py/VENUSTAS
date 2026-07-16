@@ -21,10 +21,14 @@ e checkout com fallback para WhatsApp.
    Sessions e leitura de Payment Intents/Events, em vez da secret key
    completa — ver [best practices](https://docs.stripe.com/keys-best-practices.md).
    Cole em `STRIPE_SECRET_KEY`
-3. **Métodos de pagamento**: Settings → Payment methods → habilite
-   **Card** e **Pix** (o código nunca força `payment_method_types` —
-   o que estiver habilitado no Dashboard aparece no Checkout,
-   [dynamic payment methods](https://docs.stripe.com/payments/payment-methods/dynamic-payment-methods.md))
+3. **Métodos de pagamento**: apenas **Card** habilitado (Pix não
+   disponível na conta). O código nunca força `payment_method_types` —
+   o que estiver habilitado no Dashboard (Settings → Payment methods)
+   aparece no Checkout,
+   [dynamic payment methods](https://docs.stripe.com/payments/payment-methods/dynamic-payment-methods.md).
+   Se um dia Pix for habilitado, funciona sem mudar código — os
+   eventos `async_payment_succeeded/failed` do webhook já cobrem
+   métodos assíncronos
 4. **Webhook**:
    - Local: `stripe listen --forward-to localhost:3200/api/stripe-webhook`
      imprime um `whsec_...` — cole em `STRIPE_WEBHOOK_SECRET`
@@ -36,8 +40,7 @@ e checkout com fallback para WhatsApp.
 Fluxo: carrinho → `POST /api/checkout` (preços validados no servidor) →
 redirect Stripe Checkout → retorno em `/obrigado` → webhook
 `POST /api/stripe-webhook` (assinatura sempre verificada) promove o
-pedido para `pago`. Cartão confirma na hora; Pix confirma de forma
-assíncrona quando o cliente paga o QR code.
+pedido para `pago`.
 
 ## Sanity (inventário)
 

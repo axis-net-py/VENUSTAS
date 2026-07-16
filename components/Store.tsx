@@ -255,9 +255,9 @@ export default function Store({ products }: { products: Product[] }) {
           {[0, 1].map((i) => (
             <span key={i}>
               <span>Frete grátis acima de R$199</span><em>✦</em>
-              <span>Até 40% off em batons</span><em>✦</em>
-              <span>Pix e cartão · pagamento seguro</span><em>✦</em>
+              <span>Pagamento seguro com cartão</span><em>✦</em>
               <span>Novidades toda semana</span><em>✦</em>
+              <span>Curadoria de maquiagem e cosméticos</span><em>✦</em>
             </span>
           ))}
         </div>
@@ -305,7 +305,7 @@ export default function Store({ products }: { products: Product[] }) {
         <div className="benefits-inner">
           {[
             ["(01)", "Frete grátis", "Acima de R$199 para todo o Brasil. Rastreio em tempo real do pedido até a sua porta."],
-            ["(02)", "Pix ou cartão", "Pague do seu jeito, com a segurança do Stripe em cada compra."],
+            ["(02)", "Pagamento seguro", "Cartão de crédito processado com a segurança do Stripe em cada compra."],
             ["(03)", "Cruelty free", "Só trabalhamos com marcas que não testam em animais. Beleza sem culpa."],
             ["(04)", "Troca fácil", "Não amou? Devolução gratuita em até 30 dias, sem perguntas."],
           ].map(([num, h, p]) => (
@@ -427,7 +427,7 @@ export default function Store({ products }: { products: Product[] }) {
           <button className="checkout" disabled={count === 0 || checkingOut || shippingPending} data-hover onClick={checkout}>
             <span>{checkingOut ? "Preparando pagamento…" : shippingPending ? "Escolha o frete" : "Finalizar compra"}</span>
           </button>
-          <p className="checkout-note">Pix e cartão de crédito · pagamento seguro via Stripe</p>
+          <p className="checkout-note">Cartão de crédito · pagamento seguro via Stripe</p>
         </div>
       </aside>
 
