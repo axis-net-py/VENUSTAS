@@ -23,7 +23,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
   {
     id: "1",
     name: "Kit c/3 Sabonete Hidratante Mãos e Corpo — Extrato de Algodão · Mia Make",
-    cat: "Corpo", price: 33.9, old: null, // custo 16,80
+    cat: "Corpo", price: 33.88, old: null, // custo 16,80
     emoji: "🧼", art: "linear-gradient(135deg,#FDF0E0,#E6C39A)",
     image: "https://ecoms1-nyc3.nyc3.cdn.digitaloceanspaces.com/1225/@v3/1776258349439-pinac33.jpg",
     badge: "Kit c/3",
@@ -32,7 +32,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
   {
     id: "3",
     name: "Esfoliante Corporal Morango 200ml",
-    cat: "Corpo", price: 14.9, old: null, // custo 7,20
+    cat: "Corpo", price: 14.88, old: null, // custo 7,20
     emoji: "🍓", art: "linear-gradient(135deg,#FCE4EC,#F06595)",
     image: "https://ecoms1-nyc3.nyc3.cdn.digitaloceanspaces.com/1225/@v3/1720452637673-esfoliantemorango.jpg",
     badge: null,
@@ -41,7 +41,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
   {
     id: "4",
     name: "Kit c/3 Depilador de Cristal Indolor — Cores Sortidas",
-    cat: "Corpo", price: 59.9, old: null, // custo 29,90
+    cat: "Corpo", price: 59.88, old: null, // custo 29,90
     emoji: "💎", art: "linear-gradient(135deg,#E5DBFF,#B197FC)",
     image: "https://ecoms1-nyc3.nyc3.cdn.digitaloceanspaces.com/1225/@v3/1664382295593-530e03510daa2e15e6a222689ea55ee5.jpg",
     badge: "Kit c/3",
@@ -50,7 +50,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
   {
     id: "5",
     name: "Kit c/3 Gel Beijável para Virilha 180g Menta · Phállebeauty",
-    cat: "Corpo", price: 59.9, old: null, // custo 29,97
+    cat: "Corpo", price: 59.88, old: null, // custo 29,97
     emoji: "🌿", art: "linear-gradient(135deg,#D3F3DF,#4CAF7D)",
     image: "https://ecoms1-nyc3.nyc3.cdn.digitaloceanspaces.com/1225/@v3/1747859080468-gel1.jpg",
     badge: "Kit c/3",
@@ -59,7 +59,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
   {
     id: "6",
     name: "Progressiva de Chuveiro · Isis Makeup",
-    cat: "Cabelo", price: 15.9, old: null, // custo 7,99
+    cat: "Cabelo", price: 15.88, old: null, // custo 7,99
     emoji: "🚿", art: "linear-gradient(135deg,#D0EBFF,#339AF0)",
     image: "https://ecoms1-nyc3.nyc3.cdn.digitaloceanspaces.com/1225/@v3/1745581865405-progressiva.jpg",
     badge: null,
@@ -68,7 +68,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
   {
     id: "7",
     name: "Gel Esfoliante Facial com Pedras Vulcânicas · Dermachem",
-    cat: "Skincare", price: 14.9, old: null, // custo 7,11
+    cat: "Skincare", price: 14.88, old: null, // custo 7,11
     emoji: "🌋", art: "linear-gradient(135deg,#FFE8CC,#FD7E14)",
     image: "https://ecoms1-nyc3.nyc3.cdn.digitaloceanspaces.com/1225/@v3/1615250526463-9c99c0c523b1ab4d88d0d77856386ffeawsaccesskeyidakiatclmsgfx4g7qtfvdexpires1615855324signaturebmi5akxdy1liqnknwiteygdr2li3d.jpg",
     badge: null,
@@ -77,7 +77,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
   {
     id: "8",
     name: "Paleta de Sombras Matte Seu Estilo · Ludurana",
-    cat: "Sombra", price: 19.9, old: null, // custo 10,24
+    cat: "Sombra", price: 19.88, old: null, // custo 10,24
     emoji: "🎨", art: "linear-gradient(135deg,#FFD8A8,#E8590C)",
     image: "https://ecoms1-nyc3.nyc3.cdn.digitaloceanspaces.com/1225/@v3/1650910821622-b002213.png",
     badge: "Best-seller",
@@ -86,7 +86,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
   {
     id: "9",
     name: "Kit c/6 Batom Mágico Colorido · Vivai",
-    cat: "Batom", price: 21.9, old: null, // custo 11,22
+    cat: "Batom", price: 21.88, old: null, // custo 11,22
     emoji: "💄", art: "linear-gradient(135deg,#F6D9E2,#F783AC)",
     image: "https://ecoms1-nyc3.nyc3.cdn.digitaloceanspaces.com/1225/@v3/1701691966436-h.png",
     badge: "Kit c/6",
@@ -95,7 +95,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
   {
     id: "10",
     name: "Hidratante Primer Facial Make Up · Derma Chem",
-    cat: "Skincare", price: 19.9, old: null, // custo 9,54
+    cat: "Skincare", price: 19.88, old: null, // custo 9,54
     emoji: "💧", art: "linear-gradient(135deg,#D0EBFF,#74C0FC)",
     image: "https://ecoms1-nyc3.nyc3.cdn.digitaloceanspaces.com/1225/@v3/1715252676867-hid.jpg",
     badge: "2 em 1",
@@ -104,7 +104,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
   {
     id: "11",
     name: "Sabonete Ácido Salicílico Íons · Derma Chem",
-    cat: "Skincare", price: 17.9, old: null, // custo 8,71
+    cat: "Skincare", price: 17.88, old: null, // custo 8,71
     emoji: "🧴", art: "linear-gradient(135deg,#E7F5E8,#69B36B)",
     image: "https://ecoms1-nyc3.nyc3.cdn.digitaloceanspaces.com/1225/@v3/1621953111073-4d20719699.jpg",
     badge: null,
@@ -113,7 +113,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
   {
     id: "12",
     name: "Sabonete Demaquilante Pós Maquiagem Make Out · Derma Chem",
-    cat: "Skincare", price: 15.9, old: null, // custo 7,99
+    cat: "Skincare", price: 15.88, old: null, // custo 7,99
     emoji: "🫧", art: "linear-gradient(135deg,#FFF3E2,#F1D3AE)",
     image: "https://ecoms1-nyc3.nyc3.cdn.digitaloceanspaces.com/1225/@v3/1614307297793-921311d17737b650e39709c4a12b5ef9awsaccesskeyidakiatclmsgfx4g7qtfvdexpires1614912094signaturez7zci2baem0j19p8b3wyyxvf0wjs3d.jpg",
     badge: null,
@@ -122,7 +122,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
   {
     id: "13",
     name: "Quarteto de Blush · Ludurana",
-    cat: "Rosto", price: 20.9, old: null, // custo 10,40
+    cat: "Rosto", price: 20.88, old: null, // custo 10,40
     emoji: "🌸", art: "linear-gradient(135deg,#FFE3D5,#FF922B)",
     image: "https://ecoms1-nyc3.nyc3.cdn.digitaloceanspaces.com/1225/@v3/1650660115663-quarteto-blush-ludurana-b00032.jpg",
     badge: null,
@@ -131,7 +131,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
   {
     id: "14",
     name: "Lip Tint Efeito Natural · Ludurana",
-    cat: "Batom", price: 15.9, old: null, // custo 7,68
+    cat: "Batom", price: 15.88, old: null, // custo 7,68
     emoji: "👄", art: "linear-gradient(135deg,#FFE0E9,#E8508A)",
     image: "https://ecoms1-nyc3.nyc3.cdn.digitaloceanspaces.com/1225/@v3/1781099892068-pitanga.jpg",
     badge: null,
@@ -140,7 +140,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
   {
     id: "15",
     name: "Liso Perfeito Spray Anti-Frizz 120ml · Porán",
-    cat: "Cabelo", price: 20.9, old: null, // custo 10,35
+    cat: "Cabelo", price: 20.88, old: null, // custo 10,35
     emoji: "💨", art: "linear-gradient(135deg,#E5DBFF,#9775FA)",
     image: "https://ecoms1-nyc3.nyc3.cdn.digitaloceanspaces.com/1225/@v3/1736447928500-liso.png",
     badge: null,
@@ -149,7 +149,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
   {
     id: "16",
     name: "Kit c/3 Body Splash Maracujá · Dermachem",
-    cat: "Perfume", price: 49.9, old: null, // custo 25,88
+    cat: "Perfume", price: 49.88, old: null, // custo 25,88
     emoji: "🌼", art: "linear-gradient(135deg,#FFF3BF,#FCC419)",
     image: "https://ecoms1-nyc3.nyc3.cdn.digitaloceanspaces.com/1225/@v3/1775057234458-bodyc3.jpg",
     badge: "Kit c/3",
@@ -158,7 +158,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
   {
     id: "17",
     name: "Gloss Black Rain · Max Love",
-    cat: "Batom", price: 18.9, old: null, // custo 9,64
+    cat: "Batom", price: 18.88, old: null, // custo 9,64
     emoji: "✨", art: "linear-gradient(135deg,#2B2B2B,#6C6C6C)",
     image: "https://ecoms1-nyc3.nyc3.cdn.digitaloceanspaces.com/1225/@v3/1695929578672-b71.jpg",
     badge: null,
@@ -167,7 +167,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
   {
     id: "18",
     name: "Gel Facial Peel Off Rosa Mosqueta 60g · Derma Chem",
-    cat: "Skincare", price: 13.9, old: null, // custo 6,63
+    cat: "Skincare", price: 13.88, old: null, // custo 6,63
     emoji: "🌹", art: "linear-gradient(135deg,#FFE3EC,#F783AC)",
     image: "https://ecoms1-nyc3.nyc3.cdn.digitaloceanspaces.com/1225/@v3/1614375941006-7cb7b4a3233d1491976f9123c088c214awsaccesskeyidakiatclmsgfx4g7qtfvdexpires1614980737signatureznbpf2gutgnk2dktic0gv5tg1tk3d.jpg",
     badge: null,
@@ -176,7 +176,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
   {
     id: "19",
     name: "Água Micelar Rosa Mosqueta 250ml · Derma Chem",
-    cat: "Skincare", price: 17.9, old: null, // custo 8,13
+    cat: "Skincare", price: 17.88, old: null, // custo 8,13
     emoji: "💦", art: "linear-gradient(135deg,#FFE8EE,#F3A0C2)",
     image: "https://ecoms1-nyc3.nyc3.cdn.digitaloceanspaces.com/1225/@v3/1623765372528-16016739085f779ab464e6b.jpg",
     badge: null,
@@ -185,7 +185,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
   {
     id: "20",
     name: "Depilador Elétrico · Lukton",
-    cat: "Corpo", price: 59.9, old: null, // custo 29,90
+    cat: "Corpo", price: 59.88, old: null, // custo 29,90
     emoji: "🔋", art: "linear-gradient(135deg,#E9ECEF,#868E96)",
     image: "https://ecoms1-nyc3.nyc3.cdn.digitaloceanspaces.com/1225/@v3/1766409879365-depiladorluk.jpg",
     badge: null,
@@ -194,7 +194,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
   {
     id: "21",
     name: "Combo Porán Bumbum — Creme Firmador e Esfoliante",
-    cat: "Corpo", price: 37.9, old: null, // custo 18,58
+    cat: "Corpo", price: 37.88, old: null, // custo 18,58
     emoji: "🍑", art: "linear-gradient(135deg,#FFE3D5,#FF922B)",
     image: "https://ecoms1-nyc3.nyc3.cdn.digitaloceanspaces.com/1225/@v3/1758292666308-bumbum.png",
     badge: "Combo",
@@ -203,7 +203,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
   {
     id: "22",
     name: "Kit c/3 Sabonete Corporal Melancia",
-    cat: "Corpo", price: 33.9, old: null, // custo 17,10
+    cat: "Corpo", price: 33.88, old: null, // custo 17,10
     emoji: "🍉", art: "linear-gradient(135deg,#D3F3DF,#69DB7C)",
     image: "https://ecoms1-nyc3.nyc3.cdn.digitaloceanspaces.com/1225/@v3/1720210138666-b002651.png",
     badge: "Kit c/3",
@@ -212,7 +212,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
   {
     id: "23",
     name: "Perfume Capilar Royal Blanc · Soul Cosméticos",
-    cat: "Cabelo", price: 24.9, old: null, // custo 12,24
+    cat: "Cabelo", price: 24.88, old: null, // custo 12,24
     emoji: "🤍", art: "linear-gradient(135deg,#F1F3F5,#CED4DA)",
     image: "https://ecoms1-nyc3.nyc3.cdn.digitaloceanspaces.com/1225/@v3/1778171989699-p.c.royal.jpg",
     badge: null,
@@ -221,7 +221,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
   {
     id: "24",
     name: "Kit c/3 Hidratante Corporal Morango 145g · Porán",
-    cat: "Corpo", price: 46.9, old: null, // custo 23,31
+    cat: "Corpo", price: 46.88, old: null, // custo 23,31
     emoji: "🍓", art: "linear-gradient(135deg,#FFE0E9,#F783AC)",
     image: "https://ecoms1-nyc3.nyc3.cdn.digitaloceanspaces.com/1225/@v3/1726926943255-cor177.png",
     badge: "Kit c/3",
@@ -230,7 +230,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
   {
     id: "25",
     name: "Kit c/3 Sabonete Bisnaga Melancia 145g · Porán",
-    cat: "Corpo", price: 43.9, old: null, // custo 21,84
+    cat: "Corpo", price: 43.88, old: null, // custo 21,84
     emoji: "🍉", art: "linear-gradient(135deg,#D3F3DF,#69DB7C)",
     image: "https://ecoms1-nyc3.nyc3.cdn.digitaloceanspaces.com/1225/@v3/1726922906358-cor194.png",
     badge: "Kit c/3",
@@ -239,7 +239,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
   {
     id: "26",
     name: "Gel Anti-Idade Vitamina C 100g · Derma Chem",
-    cat: "Skincare", price: 16.9, old: null, // custo 8,23
+    cat: "Skincare", price: 16.88, old: null, // custo 8,23
     emoji: "🍊", art: "linear-gradient(135deg,#FFE8CC,#FD7E14)",
     image: "https://ecoms1-nyc3.nyc3.cdn.digitaloceanspaces.com/1225/@v3/1614305949636-7f2da3a5fa9af17a65e0daf2254815f6awsaccesskeyidakiatclmsgfx4g7qtfvdexpires1614910744signatureeh2fx2fyri3v9pttj2fyplkrravozy3d.jpg",
     badge: null,
@@ -248,7 +248,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
   {
     id: "27",
     name: "Esfoliante Corporal Melancia 200ml",
-    cat: "Corpo", price: 14.9, old: null, // custo 7,20
+    cat: "Corpo", price: 14.88, old: null, // custo 7,20
     emoji: "🍉", art: "linear-gradient(135deg,#D3F3DF,#69DB7C)",
     image: "https://ecoms1-nyc3.nyc3.cdn.digitaloceanspaces.com/1225/@v3/1720450802838-esfoliantemelanciaf.jpg",
     badge: null,
@@ -257,7 +257,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
   {
     id: "28",
     name: "Mousse Micelar Anti Rosa Mosqueta · Soul Skin",
-    cat: "Skincare", price: 20.9, old: null, // custo 10,20
+    cat: "Skincare", price: 20.88, old: null, // custo 10,20
     emoji: "🌸", art: "linear-gradient(135deg,#FFE3EC,#F783AC)",
     image: "https://ecoms1-nyc3.nyc3.cdn.digitaloceanspaces.com/1225/@v3/1778079586366-m.rm.jpg",
     badge: null,
@@ -266,7 +266,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
   {
     id: "29",
     name: "Esfoliante Corpo e Rosto Melancia · Babasoul",
-    cat: "Skincare", price: 17.9, old: null, // custo 9,01
+    cat: "Skincare", price: 17.88, old: null, // custo 9,01
     emoji: "🍉", art: "linear-gradient(135deg,#D3F3DF,#69DB7C)",
     image: "https://ecoms1-nyc3.nyc3.cdn.digitaloceanspaces.com/1225/@v3/1778094725902-c.rmel.jpg",
     badge: null,
@@ -275,7 +275,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
   {
     id: "30",
     name: "Esfoliante Corpo e Rosto Tutti-Frutti · Babasoul",
-    cat: "Skincare", price: 17.9, old: null, // custo 9,01
+    cat: "Skincare", price: 17.88, old: null, // custo 9,01
     emoji: "🍇", art: "linear-gradient(135deg,#F3E8FF,#B197FC)",
     image: "https://ecoms1-nyc3.nyc3.cdn.digitaloceanspaces.com/1225/@v3/1778097251505-c.rtut.jpg",
     badge: null,
@@ -284,7 +284,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
   {
     id: "31",
     name: "Deo Colônia Eforce Sexy 50ml · Soul Cosméticos",
-    cat: "Perfume", price: 21.9, old: null, // custo 10,96
+    cat: "Perfume", price: 21.88, old: null, // custo 10,96
     emoji: "💋", art: "linear-gradient(135deg,#2B2B2B,#9E1C46)",
     image: "https://ecoms1-nyc3.nyc3.cdn.digitaloceanspaces.com/1225/@v3/1781282844706-sexy.jpg",
     badge: null,
@@ -293,7 +293,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
   {
     id: "32",
     name: "Deo Colônia Madeira Oriental 50ml · Soul Cosméticos",
-    cat: "Perfume", price: 21.9, old: null, // custo 10,96
+    cat: "Perfume", price: 21.88, old: null, // custo 10,96
     emoji: "🌳", art: "linear-gradient(135deg,#E9ECEF,#495057)",
     image: "https://ecoms1-nyc3.nyc3.cdn.digitaloceanspaces.com/1225/@v3/1781281334672-madeira.jpg",
     badge: null,
@@ -302,7 +302,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
   {
     id: "33",
     name: "Gelatina Capilar Moranguinho · Babasoul",
-    cat: "Cabelo", price: 21.9, old: null, // custo 10,63
+    cat: "Cabelo", price: 21.88, old: null, // custo 10,63
     emoji: "🍓", art: "linear-gradient(135deg,#FFE0E9,#F783AC)",
     image: "https://ecoms1-nyc3.nyc3.cdn.digitaloceanspaces.com/1225/@v3/1778073253261-g.morp.jpg",
     badge: null,
@@ -311,7 +311,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
   {
     id: "34",
     name: "Kit c/3 Esfoliante Hidratante Bumbum Lisinho · Soul Cosméticos",
-    cat: "Corpo", price: 47.9, old: null, // custo 23,85
+    cat: "Corpo", price: 47.88, old: null, // custo 23,85
     emoji: "🍑", art: "linear-gradient(135deg,#FFE3D5,#FF922B)",
     image: "https://ecoms1-nyc3.nyc3.cdn.digitaloceanspaces.com/1225/@v3/1778089078141-e.h.bblc3.jpg",
     badge: "Kit c/3",
@@ -320,7 +320,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
   {
     id: "35",
     name: "Deo Colônia Nº2 Sensual 50ml · Soul Cosméticos",
-    cat: "Perfume", price: 21.9, old: null, // custo 10,96
+    cat: "Perfume", price: 21.88, old: null, // custo 10,96
     emoji: "✨", art: "linear-gradient(135deg,#F6D9E2,#F783AC)",
     image: "https://ecoms1-nyc3.nyc3.cdn.digitaloceanspaces.com/1225/@v3/1781282069677-sensual.jpg",
     badge: null,
