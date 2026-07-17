@@ -323,7 +323,7 @@ export default function Store({ products }: { products: Product[] }) {
             ["(01)", "Frete grátis", "Acima de R$199 para todo o Brasil. Rastreio em tempo real do pedido até a sua porta."],
             ["(02)", "Pix pelo WhatsApp", "Finalize seu pedido e combine o pagamento por Pix direto com a gente."],
             ["(03)", "Cruelty free", "Só trabalhamos com marcas que não testam em animais. Beleza sem culpa."],
-            ["(04)", "Troca fácil", "Não amou? Devolução gratuita em até 30 dias, sem perguntas."],
+            ["(04)", "Atendimento direto", "Chegou errado ou com defeito? Fala com a gente pelo WhatsApp, resolvemos caso a caso."],
           ].map(([num, h, p]) => (
             <div className="benefit" key={num}>
               <span className="num">{num}</span><h3>{h}</h3><p>{p}</p>
