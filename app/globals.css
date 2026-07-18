@@ -96,7 +96,7 @@ body.loaded .hero h1 .line>span{transform:translateY(0)}
 body.loaded .hero h1 .line:nth-child(2)>span{transition-delay:.1s}
 body.loaded .hero h1 .line:nth-child(3)>span{transition-delay:.2s}
 .hero h1 em{font-style:italic;color:var(--rose);font-weight:400}
-.hero h1 .outline{color:transparent;-webkit-text-stroke:1.5px var(--ink)}
+.hero h1 .outline{color:var(--gold);font-style:italic;font-weight:400}
 .hero-bottom{margin-top:3.2rem;display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;flex-wrap:wrap}
 .hero-sub{max-width:24rem;font-size:1.02rem;line-height:1.65;color:var(--ink-soft);opacity:0;transform:translateY(20px);transition:all .8s var(--ease) .45s}
 body.loaded .hero-sub{opacity:1;transform:none}
@@ -352,7 +352,7 @@ footer{background:var(--ink);color:var(--cream);padding:6rem 2rem 2.5rem;positio
   nav.main-nav{display:none}
   .search input{width:130px}
   .hero{padding-top:6.5rem}
-  .hero-float{opacity:.55!important}
+  .hero-float{display:none}
   .section-head{padding-top:3.5rem}
 }
 @media(max-width:600px){
