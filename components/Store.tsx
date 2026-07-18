@@ -263,7 +263,10 @@ export default function Store({ products }: { products: Product[] }) {
           <p className="hero-sub">Curadoria de maquiagens e cosméticos das marcas que você ama. Frete grátis acima de R$199 e novidades toda semana.</p>
           <a className="hero-cta" href="#produtos" data-hover>Explorar loja <span className="circle">↓</span></a>
         </div>
-        <span className="hero-float f1" data-depth="22"><img src="/venus-bust.png" alt="" /></span>
+        <span className="hero-float f1" data-depth="22">
+          <img src="/venus-bust.png" alt="" />
+          <span className="hero-logo-text">VENUSTAS<small>Beauty</small></span>
+        </span>
         <div className="hero-scroll" aria-hidden="true">scroll</div>
       </section>
 
@@ -487,7 +490,13 @@ export default function Store({ products }: { products: Product[] }) {
 
 function Preloader() {
   const [done, setDone] = useState(false);
-  useEffect(() => { const t = setTimeout(() => setDone(true), 900); return () => clearTimeout(t); }, []);
+  const [hidden, setHidden] = useState(false);
+  useEffect(() => {
+    if (location.search.includes("noload")) { setHidden(true); document.body.classList.add("loaded"); return; }
+    const t = setTimeout(() => setDone(true), 900);
+    return () => clearTimeout(t);
+  }, []);
+  if (hidden) return null;
   return (
     <div className={`preloader${done ? " done" : ""}`} aria-hidden="true">
       <h2><span>V</span><span>E</span><span>N</span><span>U</span><span>S</span><span>T</span><span>A</span><span><i>S</i></span></h2>

@@ -65,8 +65,8 @@ header.scrolled{background:rgba(246,241,233,.88);backdrop-filter:blur(14px);box-
 .logo i{font-style:italic;color:var(--rose)}
 .logo-mark{height:44px;width:auto;flex-shrink:0;transition:transform .5s var(--ease)}
 .logo:hover .logo-mark{transform:rotate(8deg)}
-.logo-text{display:flex;flex-direction:column;line-height:1.05}
-.logo-text small{font-family:var(--font-body);font-size:.55rem;font-weight:700;letter-spacing:.52em;text-transform:uppercase;color:var(--rose);margin-top:.18rem}
+.logo-text{display:flex;flex-direction:column;align-items:center;line-height:1.05}
+.logo-text small{font-family:var(--font-body);font-size:.55rem;font-weight:700;letter-spacing:.52em;margin-right:-.52em;text-transform:uppercase;color:var(--rose);margin-top:.28rem;padding-top:.28rem;border-top:1px solid var(--gold)}
 nav.main-nav{display:flex;gap:1.8rem;margin-left:1rem}
 nav.main-nav a{text-decoration:none;font-size:.82rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;position:relative;padding:.2rem 0}
 nav.main-nav a::after{content:"";position:absolute;left:0;bottom:0;width:100%;height:1.5px;background:var(--rose);transform:scaleX(0);transform-origin:right;transition:transform .35s var(--ease)}
@@ -106,7 +106,10 @@ body.loaded .hero-cta{opacity:1}
 .hero-cta:hover .circle{transform:scale(1.15) rotate(45deg);background:var(--ink)}
 .hero-float{position:absolute;font-size:clamp(2.5rem,5vw,4.5rem);filter:drop-shadow(0 16px 24px rgba(23,18,14,.25));pointer-events:none;transition:transform .6s cubic-bezier(.2,.8,.2,1);opacity:0;animation:fadeFloat 1s .8s forwards}
 @keyframes fadeFloat{to{opacity:1}}
-.hero-float img{width:clamp(240px,28vw,440px);height:auto;display:block;opacity:.9}
+.hero-float img{width:clamp(200px,24vw,380px);height:auto;display:block;opacity:.9}
+.f1{display:flex;flex-direction:column;align-items:center;gap:1.1rem}
+.hero-logo-text{font-family:var(--font-display);font-weight:500;font-size:clamp(1.5rem,2.4vw,2.4rem);letter-spacing:.22em;margin-right:-.22em;color:var(--ink);display:flex;flex-direction:column;align-items:center;line-height:1}
+.hero-logo-text small{font-family:var(--font-body);font-size:.34em;font-weight:700;letter-spacing:.6em;margin-right:-.6em;text-transform:uppercase;color:var(--rose);margin-top:.55rem;padding-top:.55rem;border-top:1.2px solid var(--gold)}
 .f1{top:16%;right:7%}
 .hero-scroll{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(23,18,14,.5);display:flex;flex-direction:column;align-items:center;gap:.6rem}
 .hero-scroll::after{content:"";width:1.5px;height:44px;background:linear-gradient(var(--rose),transparent);animation:drip 1.8s var(--ease) infinite}
@@ -384,6 +387,7 @@ footer{background:var(--ink);color:var(--cream);padding:6rem 2rem 2.5rem;positio
   *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
   /* animações infinitas decorativas: parar, não encurtar (0.01ms infinito vira estrobo) */
   .grain,.hero-float,.hero-scroll::after,.ship-fill{animation:none!important}
+  .hero-float{opacity:1!important}
   /* marquee roda sempre, devagar */
   .marquee__track{animation-duration:22s!important}
 }
