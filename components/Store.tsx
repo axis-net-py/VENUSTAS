@@ -2,7 +2,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { Product } from "@/lib/products";
 import type { ShippingOption } from "@/lib/shipping";
-import VenusMark from "@/components/VenusMark";
 
 const FREE_SHIP = 199;
 const brl = (v: number) => v.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
@@ -233,7 +232,7 @@ export default function Store({ products }: { products: Product[] }) {
       <header>
         <div className="header-inner">
           <a className="logo" href="#" data-hover>
-            <VenusMark circled className="logo-mark" />
+            <img className="logo-mark" src="/venus-bust.png" alt="" />
             <span className="logo-text">VENUSTAS<small>Beauty</small></span>
           </a>
           <nav className="main-nav">
@@ -264,9 +263,7 @@ export default function Store({ products }: { products: Product[] }) {
           <p className="hero-sub">Curadoria de maquiagens e cosméticos das marcas que você ama. Frete grátis acima de R$199 e novidades toda semana.</p>
           <a className="hero-cta" href="#produtos" data-hover>Explorar loja <span className="circle">↓</span></a>
         </div>
-        <span className="hero-float f1" data-depth="26"><VenusMark circled /></span>
-        <span className="hero-float f2" data-depth="14"><VenusMark /></span>
-        <span className="hero-float f3" data-depth="40"><VenusMark circled /></span>
+        <span className="hero-float f1" data-depth="22"><img src="/venus-bust.png" alt="" /></span>
         <div className="hero-scroll" aria-hidden="true">scroll</div>
       </section>
 

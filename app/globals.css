@@ -63,7 +63,7 @@ header.scrolled{background:rgba(246,241,233,.88);backdrop-filter:blur(14px);box-
 .header-inner{max-width:1440px;margin:0 auto;padding:1.1rem 2rem;display:flex;align-items:center;gap:2rem}
 .logo{font-family:var(--font-display);font-weight:500;font-size:1.28rem;letter-spacing:.16em;text-decoration:none;display:flex;align-items:center;gap:.7rem}
 .logo i{font-style:italic;color:var(--rose)}
-.logo-mark{width:40px;height:40px;color:var(--rose);flex-shrink:0;transition:transform .5s var(--ease)}
+.logo-mark{height:44px;width:auto;flex-shrink:0;transition:transform .5s var(--ease)}
 .logo:hover .logo-mark{transform:rotate(8deg)}
 .logo-text{display:flex;flex-direction:column;line-height:1.05}
 .logo-text small{font-family:var(--font-body);font-size:.55rem;font-weight:700;letter-spacing:.52em;text-transform:uppercase;color:var(--rose);margin-top:.18rem}
@@ -106,13 +106,8 @@ body.loaded .hero-cta{opacity:1}
 .hero-cta:hover .circle{transform:scale(1.15) rotate(45deg);background:var(--ink)}
 .hero-float{position:absolute;font-size:clamp(2.5rem,5vw,4.5rem);filter:drop-shadow(0 16px 24px rgba(23,18,14,.25));pointer-events:none;transition:transform .6s cubic-bezier(.2,.8,.2,1);opacity:0;animation:fadeFloat 1s .8s forwards}
 @keyframes fadeFloat{to{opacity:1}}
-.hero-float svg{width:1em;height:1em;display:block}
-.hero-float{color:var(--rose)}
-.f2{color:var(--gold);opacity:0;animation:fadeFloat 1s .95s forwards}
-.f3{color:var(--rose-deep)}
-.f1{top:18%;right:12%}
-.f2{top:42%;right:26%;font-size:clamp(2rem,3.5vw,3.2rem)}
-.f3{bottom:20%;right:8%;font-size:clamp(2rem,4vw,3.6rem)}
+.hero-float img{width:clamp(240px,28vw,440px);height:auto;display:block;opacity:.9}
+.f1{top:16%;right:7%}
 .hero-scroll{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(23,18,14,.5);display:flex;flex-direction:column;align-items:center;gap:.6rem}
 .hero-scroll::after{content:"";width:1.5px;height:44px;background:linear-gradient(var(--rose),transparent);animation:drip 1.8s var(--ease) infinite}
 @keyframes drip{from{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}to{transform:scaleY(0);transform-origin:bottom}}
