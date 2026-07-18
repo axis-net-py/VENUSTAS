@@ -2,6 +2,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { Product } from "@/lib/products";
 import type { ShippingOption } from "@/lib/shipping";
+import VenusMark from "@/components/VenusMark";
 
 const FREE_SHIP = 199;
 const brl = (v: number) => v.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
@@ -232,10 +233,7 @@ export default function Store({ products }: { products: Product[] }) {
       <header>
         <div className="header-inner">
           <a className="logo" href="#" data-hover>
-            <svg className="logo-mark" viewBox="0 0 48 48" aria-hidden="true">
-              <circle cx="24" cy="24" r="22.5" fill="none" stroke="currentColor" strokeWidth="1.2" />
-              <path d="M24 10c-4.4 0-8 3.6-8 8 0 3.1 1.8 5.8 4.4 7.2-.3 2.6-1.5 4.6-3.4 6.3 2.3.6 4.7.3 7-.9 2.3 1.2 4.7 1.5 7 .9-1.9-1.7-3.1-3.7-3.4-6.3 2.6-1.4 4.4-4.1 4.4-7.2 0-4.4-3.6-8-8-8z" fill="currentColor" opacity=".9" />
-            </svg>
+            <VenusMark circled className="logo-mark" />
             <span className="logo-text">VENUSTAS<small>Beauty</small></span>
           </a>
           <nav className="main-nav">
@@ -266,9 +264,9 @@ export default function Store({ products }: { products: Product[] }) {
           <p className="hero-sub">Curadoria de maquiagens e cosméticos das marcas que você ama. Frete grátis acima de R$199 e novidades toda semana.</p>
           <a className="hero-cta" href="#produtos" data-hover>Explorar loja <span className="circle">↓</span></a>
         </div>
-        <span className="hero-float f1" data-depth="26">💄</span>
-        <span className="hero-float f2" data-depth="14">✨</span>
-        <span className="hero-float f3" data-depth="40">🌹</span>
+        <span className="hero-float f1" data-depth="26"><VenusMark circled /></span>
+        <span className="hero-float f2" data-depth="14"><VenusMark /></span>
+        <span className="hero-float f3" data-depth="40"><VenusMark circled /></span>
         <div className="hero-scroll" aria-hidden="true">scroll</div>
       </section>
 
