@@ -31,7 +31,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
   },
   {
     id: "3",
-    name: "Esfoliante Corporal Morango 200ml",
+    name: "Esfoliante Corporal Morango 200ml · Ludurana",
     cat: "Corpo", price: 14.88, old: null, // custo 7,20
     emoji: "🍓", art: "linear-gradient(135deg,#FCE4EC,#F06595)",
     image: "https://ecoms1-nyc3.nyc3.cdn.digitaloceanspaces.com/1225/@v3/1720452637673-esfoliantemorango.jpg",
@@ -40,7 +40,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
   },
   {
     id: "4",
-    name: "Kit c/3 Depilador de Cristal Indolor — Cores Sortidas",
+    name: "Kit c/3 Depilador de Cristal Indolor — Cores Sortidas · IM",
     cat: "Corpo", price: 59.88, old: null, // custo 29,90
     emoji: "💎", art: "linear-gradient(135deg,#E5DBFF,#B197FC)",
     image: "https://ecoms1-nyc3.nyc3.cdn.digitaloceanspaces.com/1225/@v3/1664382295593-530e03510daa2e15e6a222689ea55ee5.jpg",
@@ -202,7 +202,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
   },
   {
     id: "22",
-    name: "Kit c/3 Sabonete Corporal Melancia",
+    name: "Kit c/3 Sabonete Corporal Melancia · Ludurana",
     cat: "Corpo", price: 33.88, old: null, // custo 17,10
     emoji: "🍉", art: "linear-gradient(135deg,#D3F3DF,#69DB7C)",
     image: "https://ecoms1-nyc3.nyc3.cdn.digitaloceanspaces.com/1225/@v3/1720210138666-b002651.png",
@@ -247,7 +247,7 @@ export const FALLBACK_PRODUCTS: Product[] = [
   },
   {
     id: "27",
-    name: "Esfoliante Corporal Melancia 200ml",
+    name: "Esfoliante Corporal Melancia 200ml · Ludurana",
     cat: "Corpo", price: 14.88, old: null, // custo 7,20
     emoji: "🍉", art: "linear-gradient(135deg,#D3F3DF,#69DB7C)",
     image: "https://ecoms1-nyc3.nyc3.cdn.digitaloceanspaces.com/1225/@v3/1720450802838-esfoliantemelanciaf.jpg",
